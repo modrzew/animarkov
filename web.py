@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 
-import generate
-import models
+from . import generate
+from . import models
 
 app = Flask('animarkov')
 

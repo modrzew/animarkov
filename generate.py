@@ -4,8 +4,8 @@ import random
 
 import markovify
 
-import db
-import models
+from . import db
+from . import models
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
