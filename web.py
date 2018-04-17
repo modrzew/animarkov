@@ -6,12 +6,19 @@ import models
 app = Flask('animarkov')
 
 
+CACHED = {
+    'models': None,
+}
+
+
 @app.route('/')
 def index():
-    try:
-        titles, synopsises = generate.load_models()
-    except generate.ModelsNotGeneratedError:
-        return 'Models not generated'
+    if not CACHED['models']:
+        try:
+            CACHED['models'] = generate.load_models()
+        except generate.ModelsNotGeneratedError:
+            return 'Models not generated'
+    titles, synopsises = CACHED['models']
     title = models.get_title(titles)
     synopsis = models.get_synopsis(synopsises)
     return render_template('index.html', title=title, synopsis=synopsis)
