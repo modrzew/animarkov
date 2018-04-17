@@ -1,0 +1,5 @@
+__pycache__
+.virtualenv
+.vscode
+db.sqlite-journal
+models.json

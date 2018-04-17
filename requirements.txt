@@ -1,0 +1,6 @@
+beautifulsoup4==4.6.0
+Flask==0.12.2
+Jinja2==2.10
+markovify==0.7.1
+requests==2.18.4
+SQLAlchemy==1.2.6
