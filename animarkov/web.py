@@ -26,4 +26,5 @@ def index():
         title=title,
         synopsis=synopsis,
         count=len(titles.parsed_sentences),
+        debug=app.debug,
     )
