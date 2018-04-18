@@ -84,6 +84,25 @@ def main():
     print(synopsises.make_short_sentence(1000, 100, tries=50))
     sentence = ''
     while len(sentence) < 150:
-        beginning = random.choice(('However', 'But'))
+        beginning = random.choice((
+            'However',
+            'However,',
+            'But',
+            'Meanwhile,',
+            'Unfortunately',
+            'Unfortunately,',
+            'Although',
+            'Though',
+            'Suddenly,',
+            'Suddenly',
+            'Yet',
+            'Nevertheless,',
+            'Moreover,',
+            'Fortunately,',
+            'Furthermore,',
+            'Thus',
+            'Thus,',
+            'Unable',
+        ))
         sentence = synopsises.make_sentence_with_start(beginning, tries=100)
     print(sentence)

@@ -22,6 +22,25 @@ def get_synopsis(model):
     first = model.make_short_sentence(1000, 100, tries=100)
     second = ''
     while len(second) < 150:
-        beginning = random.choice(('However', 'But', 'Yet', 'Despite'))
+        beginning = random.choice((
+            'However',
+            'However,',
+            'But',
+            'Meanwhile,',
+            'Unfortunately',
+            'Unfortunately,',
+            'Although',
+            'Though',
+            'Suddenly,',
+            'Suddenly',
+            'Yet',
+            'Nevertheless,',
+            'Moreover,',
+            'Fortunately,',
+            'Furthermore,',
+            'Thus',
+            'Thus,',
+            'Unable',
+        ))
         second = model.make_sentence_with_start(beginning, tries=100)
     return [first, second]
