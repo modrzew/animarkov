@@ -68,11 +68,3 @@ def main(start_page, end_page):
             if i > 0 and i % 5 == 0:
                 logger.info('Committing')
                 session.commit()
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--start_page', type=int)
-    parser.add_argument('--end_page', type=int)
-    args = parser.parse_args()
-    main(args.start_page, args.end_page)

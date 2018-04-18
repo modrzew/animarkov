@@ -74,7 +74,3 @@ def main():
         beginning = random.choice(('However', 'But'))
         sentence = synopsises.make_sentence_with_start(beginning, tries=100)
     print(sentence)
-
-
-if __name__ == '__main__':
-    main()
