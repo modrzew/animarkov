@@ -24,7 +24,10 @@ def get_models(session):
         try:
             if ' ' in anime.title:
                 title_model = markovify.Text(
-                    ''.join(ch for ch in anime.title if ch.isalnum() or ch in ALLOWED),
+                    ''.join(
+                        ch for ch in anime.title
+                        if ch.isalnum() or ch in ALLOWED
+                    ),
                     state_size=1,
                 )
                 if titles:
@@ -34,15 +37,19 @@ def get_models(session):
             if len(anime.synopsis) > 50:
                 synopsis = anime.synopsis.replace('\n', ' ').replace('\r', ' ')
                 synopsis_model = markovify.Text(
-                    ''.join(ch for ch in synopsis if ch.isalnum() or ch in ALLOWED),
+                    ''.join(
+                        ch for ch in synopsis
+                        if ch.isalnum() or ch in ALLOWED
+                    ),
                     state_size=3,
                 )
                 if synopsises:
-                    synopsises = markovify.combine(models=[synopsises, synopsis_model])
+                    synopsises = markovify.combine(
+                        models=[synopsises, synopsis_model],
+                    )
                 else:
                     synopsises = synopsis_model
         except Exception as e:
-            import pdb; pdb.set_trace()
             continue
         if i > 0 and i % 50 == 0:
             logger.info(f'Added {i} entries')
@@ -53,12 +60,18 @@ def load_models(session=None):
     try:
         with open('models.json') as f:
             models = json.load(f)
-        return markovify.Text.from_dict(models['titles']), markovify.Text.from_dict(models['synopsises'])
+        return (
+            markovify.Text.from_dict(models['titles']),
+            markovify.Text.from_dict(models['synopsises']),
+        )
     except (FileNotFoundError, json.JSONDecodeError):
         if not session:
             raise ModelsNotGeneratedError
         titles, synopsises = get_models(session)
-        models = {'titles': titles.to_dict(), 'synopsises': synopsises.to_dict()}
+        models = {
+            'titles': titles.to_dict(),
+            'synopsises': synopsises.to_dict(),
+        }
         with open('models.json', 'w') as f:
             json.dump(models, f)
         return titles, synopsises

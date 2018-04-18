@@ -24,29 +24,25 @@ def get_anime(mal_id, url):
     response = requests.get(url)
     if response.status_code != 200:
         raise RequestError
-    try:
-        bs = BeautifulSoup(response.text, 'html.parser')
-        title = bs.select('h1 span')[0].text
-        synopsis = bs.select('span[itemprop=description]')
-        if not synopsis:
-            return
-        synopsis = synopsis[0].text.replace('[Written by MAL Rewrite]', '').strip()
-    except Exception as e:
-        blah = e
-        import pdb; pdb.set_trace()
+    bs = BeautifulSoup(response.text, 'html.parser')
+    title = bs.select('h1 span')[0].text
+    synopsis = bs.select('span[itemprop=description]')
+    if not synopsis:
+        return
+    synopsis = synopsis[0].text.replace('[Written by MAL Rewrite]', '').strip()
     return models.Anime(mal_id=mal_id, title=title, synopsis=synopsis)
 
 
 def get_page(session, page=0):
     logger.info(f'Getting page {page}')
     limit = page * 50
-    response = requests.get(f'https://myanimelist.net/topanime.php?limit={limit}')
+    response = requests.get(
+        f'https://myanimelist.net/topanime.php?limit={limit}'
+    )
     bs = BeautifulSoup(response.text, 'html.parser')
     for anchor in bs.select('td.title > a'):
         url = anchor.attrs['href']
         match = re.match(r'https://myanimelist.net/anime/(\d+)/.*', url)
-        if not match:
-            import pdb; pdb.set_trace()
         mal_id = int(match.group(1))
         if not session.query(models.Anime).get(mal_id):
             for attempt in range(3):
