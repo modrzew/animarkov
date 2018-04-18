@@ -1,6 +1,6 @@
 import argparse
 
-from animarkov import fetch, generate
+from .animarkov import fetch, generate
 
 
 if __name__ == '__main__':

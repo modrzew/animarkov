@@ -1,1 +1,1 @@
-from animarkov.web import app
+from .animarkov.web import app
