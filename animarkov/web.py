@@ -21,4 +21,9 @@ def index():
     titles, synopsises = CACHED['models']
     title = models.get_title(titles)
     synopsis = models.get_synopsis(synopsises)
-    return render_template('index.html', title=title, synopsis=synopsis)
+    return render_template(
+        'index.html',
+        title=title,
+        synopsis=synopsis,
+        count=len(titles.parsed_sentences),
+    )

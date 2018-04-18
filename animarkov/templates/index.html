@@ -7,22 +7,51 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <title>Animarkov</title>
     <style>
+        body {
+            background: linear-gradient(45deg, rgb(151, 243, 3), rgb(255, 123, 0));
+            height: 100vh;
+        }
         .container {
-            padding-top: 10vh;
+            animation: rise linear 0.5s;
+        }
+        .box {
+            margin-top: 10vh;
+            margin-bottom: 16px;
+            padding: 24px 8px;
             text-align: center;
+            background: white;
+            border-radius: 5px;
+        }
+        @keyframes rise {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0px);
+            }
         }
         h1 {
             margin-bottom: 24px;
+        }
+        .info {
+            opacity: 0.3;
+            letter-spacing: 1px;
+            font-variant: small-caps;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <p><i>Your random chinese cartoon is...</i></p>
-        <h1>{{ title }}</h1>
-        {% for paragraph in synopsis %}
-            <p>{{ paragraph }}</p>
-        {% endfor %}
+        <div class="box">
+            <p><i>Your random chinese cartoon is...</i></p>
+            <h1>{{ title }}</h1>
+            {% for paragraph in synopsis %}
+                <p>{{ paragraph }}</p>
+            {% endfor %}
+        </div>
+        <p class="text-center info"><small>Generated from {{ count }} anime synopsises taken from MyAnimeList</small></p>
     </div>
 </body>
 </html>
