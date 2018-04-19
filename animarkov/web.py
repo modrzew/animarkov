@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from jinja2 import TemplateNotFound
 
 from . import generate
 from . import models
@@ -21,10 +22,16 @@ def index():
     titles, synopsises = CACHED['models']
     title = models.get_title(titles)
     synopsis = models.get_synopsis(synopsises)
+    tracking = None
+    if not app.debug:
+        try:
+            tracking = render_template('tracking.html')
+        except TemplateNotFound:
+            pass
     return render_template(
         'index.html',
         title=title,
         synopsis=synopsis,
         count=len(titles.parsed_sentences),
-        debug=app.debug,
+        tracking=tracking,
     )
