@@ -79,30 +79,5 @@ def load_models(session=None):
 
 def main():
     session = db.Session()
-    titles, synopsises = load_models(session)
-    print(titles.make_short_sentence(200, 30, tries=200))
-    print(synopsises.make_short_sentence(1000, 100, tries=50))
-    sentence = ''
-    while len(sentence) < 150:
-        beginning = random.choice((
-            'However',
-            'However,',
-            'But',
-            'Meanwhile,',
-            'Unfortunately',
-            'Unfortunately,',
-            'Although',
-            'Though',
-            'Suddenly,',
-            'Suddenly',
-            'Yet',
-            'Nevertheless,',
-            'Moreover,',
-            'Fortunately,',
-            'Furthermore,',
-            'Thus',
-            'Thus,',
-            'Unable',
-        ))
-        sentence = synopsises.make_sentence_with_start(beginning, tries=100)
-    print(sentence)
+    load_models(session)
+    print('Models generated')
