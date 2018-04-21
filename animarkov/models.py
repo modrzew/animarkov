@@ -18,29 +18,41 @@ def get_title(model):
     return model.make_short_sentence(200, 30, tries=200)
 
 
+SECOND_PARAGRAPH_START = (
+    'However',
+    'However,',
+    'But',
+    'Meanwhile,',
+    'Meanwhile',
+    'Unfortunately',
+    'Unfortunately,',
+    'Although',
+    'Though',
+    'Suddenly,',
+    'Suddenly',
+    'Yet',
+    'Yet,',
+    'Nevertheless,',
+    'Moreover,',
+    'Fortunately,',
+    'Furthermore,',
+    'Thus',
+    'Thus,',
+    'Unable',
+    'Later',
+    'Later,',
+)
+
+
 def get_synopsis(model):
-    first = model.make_short_sentence(1000, 100, tries=100)
+    while True:
+        first = model.make_short_sentence(1000, 100, tries=100)
+        for word in SECOND_PARAGRAPH_START:
+            if first.startswith(word):
+                continue
+        break
     second = ''
-    while len(second) < 150:
-        beginning = random.choice((
-            'However',
-            'However,',
-            'But',
-            'Meanwhile,',
-            'Unfortunately',
-            'Unfortunately,',
-            'Although',
-            'Though',
-            'Suddenly,',
-            'Suddenly',
-            'Yet',
-            'Nevertheless,',
-            'Moreover,',
-            'Fortunately,',
-            'Furthermore,',
-            'Thus',
-            'Thus,',
-            'Unable',
-        ))
+    while len(second) < 200:
+        beginning = random.choice(SECOND_PARAGRAPH_START)
         second = model.make_sentence_with_start(beginning, tries=100)
     return [first, second]
