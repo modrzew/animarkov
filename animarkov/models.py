@@ -41,16 +41,20 @@ SECOND_PARAGRAPH_START = (
     'Unable',
     'Later',
     'Later,',
+    'Also',
 )
 
 
 def get_synopsis(model):
     while True:
+        valid = True
         first = model.make_short_sentence(1000, 100, tries=100)
         for word in SECOND_PARAGRAPH_START:
             if first.startswith(word):
-                continue
-        break
+                valid = False
+                break
+        if valid:
+            break
     second = ''
     while len(second) < 200:
         beginning = random.choice(SECOND_PARAGRAPH_START)
